@@ -755,7 +755,7 @@ class Block(composites.Composite):
         """
         Update component group mults.
 
-        This applies only to block child components that themselves have child components.
+        This applies only to block children that themselves have child components.
 
         They were temporarily set to the desired blend fraction during component
         construction. This derives the actual multiplicity based on the target

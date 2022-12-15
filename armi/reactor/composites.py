@@ -3213,7 +3213,13 @@ class Leaf(ArmiObject):
     def getChildren(
         self, deep=False, generationNum=1, includeMaterials=False, predicate=None
     ):
-        """Return empty list, representing that this object has no children."""
+        """
+        Return empty list, representing that this object has no children.
+
+        But allow a strange behavior to get the Material object if the
+        ``includeMaterials`` flag is set. This is intended to be eliminated
+        in the future since Materials should not contain any state information.
+        """
         children = []
         if includeMaterials:
             material = getattr(self, "material", None)

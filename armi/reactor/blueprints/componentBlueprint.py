@@ -117,8 +117,19 @@ class ComponentDimension(yamlize.Object):
 
 class ComponentBlueprint(yamlize.Object):
     """
-    This class defines the inputs necessary to build ARMI component objects. It uses ``yamlize`` to enable serialization
-    to and from YAML.
+    This class defines the inputs necessary to build ARMI component objects. It
+    uses ``yamlize`` to enable serialization to and from YAML.
+
+    For blends, we have a specific shape (e.g. a TRISO compact cylinder) that
+    has a material (graphite) and also contains a bunch of TRISO particles.
+    Following the Composite design pattern, this should form one Composite
+    object and fill it with the following children:
+        * A graphite cylinder with its mult reduced to make room for the particles
+        * A triso kernel group with high mult computed from the blend fraction
+
+    As graphic groups in a graphics program have a specific outline shape, so
+    also should the compact composite know what its defining outline is somehow.
+    In this example it's the compact cylinder.
     """
 
     name = yamlize.Attribute(type=str)
@@ -188,9 +199,11 @@ class ComponentBlueprint(yamlize.Object):
                     group = blueprint.componentGroups[groupName]
                     # strip off the blend/blendFrac args since they aren't valid on any
                     # specific shape's constructor
+                    # TODO NWT: need a lot more work in here componentchildren
                     del kwargs["blends"]
                     del kwargs["blendFracs"]
                     # build the background object
+                    constructedContainerObject = composites.Composite(groupName)
                     constructedObject = components.factory(shape, [], kwargs)
                     # build the child objects
                     # all grouped components have to be input with the same mult for now
@@ -200,7 +213,7 @@ class ComponentBlueprint(yamlize.Object):
                             groupedComponent.name
                         ]
                         if inputMult is None:
-                            inputMult = componentDesign.mult 
+                            inputMult = componentDesign.mult
                         if componentDesign.mult != inputMult:
                             raise ValueError(
                                 f"Grouped components must all have the same input mult of {inputMult}"
