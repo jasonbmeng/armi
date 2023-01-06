@@ -214,6 +214,8 @@ class OperatorMPI(Operator):
         xsGroups = self.getInterface("xsGroups")
         if xsGroups:
             xsGroups.clearRepresentativeBlocks()
+
+        # NOTE: This is here because settings can change at runtime (unfortunately).
         cs = settings.getMasterCs()
         bp = self.r.blueprints
         spatialGrid = self.r.core.spatialGrid

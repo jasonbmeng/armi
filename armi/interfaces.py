@@ -464,6 +464,12 @@ class InputWriter:
         self.externalCodeInterface = externalCodeInterface
         self.eci = externalCodeInterface
         self.r = r
+        if cs:
+            self.cs = cs
+        elif self.eci is not None:
+            self.cs = self.eci.cs
+        else:
+            self.cs = None
 
     def getInterface(self, name):
         """Get another interface by name."""
@@ -497,6 +503,7 @@ class OutputReader:
         self.externalCodeInterface = externalCodeInterface
         self.eci = self.externalCodeInterface
         self.r = r
+        self.cs = self.eci.cs if self.eci is not None else None
         if fName:
             self.output = textProcessors.TextProcessor(fName)
         else:
