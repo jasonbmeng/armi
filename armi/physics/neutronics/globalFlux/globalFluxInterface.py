@@ -513,6 +513,10 @@ class GlobalFluxResultMapper(interfaces.OutputReader):
     dpa rate coming from dpa deltas and cycle length.
     """
 
+    def __init__(self, cs):
+        interfaces.OutputReader(self)
+        self.cs = cs
+
     def getKeff(self):
         raise NotImplementedError()
 

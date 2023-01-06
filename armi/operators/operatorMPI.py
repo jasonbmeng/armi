@@ -186,6 +186,7 @@ class OperatorMPI(Operator):
                             cmd
                         )
                     )
+
             pm = getPluginManager()
             resetFlags = pm.hook.mpiActionRequiresReset(cmd=cmd)
             # only reset if all the plugins agree to reset
