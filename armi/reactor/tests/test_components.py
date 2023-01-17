@@ -559,8 +559,8 @@ class TestComponentExpansion(unittest.TestCase):
             mass2 * circle2.getThermalExpansionFactor(),
         )
 
-        # material.density is the 2D density of a material
-        # material.density3 is true density and not equal in this case
+        # material.pseudoDensity is the 2D density of a material
+        # material.density is true density and not equal in this case
         for circle in [circle1, circle2]:
             # 2D density is not equal after application of coldMatAxialExpansionFactor
             # which happens during construction
@@ -577,7 +577,7 @@ class TestComponentExpansion(unittest.TestCase):
             )
             self.assertAlmostEqual(
                 circle.getMassDensity(),
-                circle.material.density3(Tc=circle.temperatureInC),
+                circle.material.density(Tc=circle.temperatureInC),
             )
 
         # brief 2D expansion with set temp to show mass is conserved
@@ -615,7 +615,7 @@ class TestComponentExpansion(unittest.TestCase):
 
         self.assertAlmostEqual(
             circle1.getMassDensity(),
-            circle1.material.density3(Tc=circle1.temperatureInC),
+            circle1.material.density(Tc=circle1.temperatureInC),
         )
         # change back to old temp
         circle1.adjustDensityForHeightExpansion(self.tWarm)
@@ -658,7 +658,7 @@ class TestComponentExpansion(unittest.TestCase):
 
             self.assertAlmostEqual(
                 circle.getMassDensity(),
-                circle.material.density3(Tc=circle.temperatureInC),
+                circle.material.density(Tc=circle.temperatureInC),
             )
             # total mass consistent between hot and cold
             # Hot height will be taller
@@ -666,7 +666,7 @@ class TestComponentExpansion(unittest.TestCase):
             self.assertAlmostEqual(
                 coldHeight
                 * circle.getArea(cold=True)
-                * circle.material.density3(Tc=circle.inputTemperatureInC),
+                * circle.material.density(Tc=circle.inputTemperatureInC),
                 hotHeight * circle.getArea() * circle.getMassDensity(),
             )
 

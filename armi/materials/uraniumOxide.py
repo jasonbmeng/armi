@@ -106,7 +106,7 @@ class UraniumOxide(material.FuelMaterial, material.SimpleSolid):
     def __init__(self):
         material.FuelMaterial.__init__(self)
         self.theoreticalDensityFrac = 1.0
-        self.refDens = self.density3(Tk=self.refTempK)
+        self.refDens = self.density(Tk=self.refTempK)
 
     def adjustTD(self, val: float) -> None:
         self.theoreticalDensityFrac = val
@@ -170,7 +170,7 @@ class UraniumOxide(material.FuelMaterial, material.SimpleSolid):
         """
         return self.__meltingPoint
 
-    def density3(self, Tk: float = None, Tc: float = None) -> float:
+    def density(self, Tk: float = None, Tc: float = None) -> float:
         """
         Density in (g/cc)
 

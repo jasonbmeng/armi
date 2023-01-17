@@ -337,8 +337,8 @@ class Component(composites.Composite, metaclass=ComponentType):
         - After the expansion, the density of the component should reflect the 3d
           density of the material
         """
-        # note, that this is not the actual material density, but rather 2D expanded
-        # `density3` is 3D density
+        # NOTE: this is not the actual material density, but rather 2D expanded
+        # (`density` is 3D density)
         # call getProperty to cache and improve speed
         density = self.material.getProperty("pseudoDensity", Tc=self.temperatureInC)
 

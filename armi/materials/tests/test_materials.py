@@ -45,9 +45,9 @@ class _Material_Test:
             self.mat.thermalConductivity(500), mat.thermalConductivity(500)
         )
 
-    def test_density3(self):
-        """Test that all materials produce a zero density from density3"""
-        self.assertNotEqual(self.mat.density3(500), 0)
+    def test_density(self):
+        """Test that all materials produce a zero density from density"""
+        self.assertNotEqual(self.mat.density(500), 0)
 
     def test_getChildren(self):
         self.assertEqual(len(self.mat.getChildren()), 0)
@@ -221,7 +221,7 @@ class MOX_TestCase(_Material_Test, unittest.TestCase):
     MAT_CLASS = materials.MOX
 
     def test_density(self):
-        cur = self.mat.density3(333)
+        cur = self.mat.density(333)
         ref = 10.926
         delta = ref * 0.0001
         self.assertAlmostEqual(cur, ref, delta=delta)
@@ -273,11 +273,11 @@ class NaCl_TestCase(_Material_Test, unittest.TestCase):
     MAT_CLASS = materials.NaCl
 
     def test_density(self):
-        cur = self.mat.density3(Tc=100)
+        cur = self.mat.density(Tc=100)
         ref = 2.113204
         self.assertAlmostEqual(cur, ref, delta=abs(ref * 0.001))
 
-        cur = self.mat.density3(Tc=300)
+        cur = self.mat.density(Tc=300)
         ref = 2.050604
         self.assertAlmostEqual(cur, ref, delta=abs(ref * 0.001))
 
@@ -454,7 +454,7 @@ class ThoriumUraniumMetal_TestCase(_Material_Test, unittest.TestCase):
 class Uranium_TestCase(_Material_Test, unittest.TestCase):
     MAT_CLASS = materials.Uranium
 
-    def test_density3(self):
+    def test_density(self):
         """
         this material has no density function
         """
@@ -527,12 +527,12 @@ class UraniumOxide_TestCase(_Material_Test, unittest.TestCase):
         # Fuels Including the Effects of Irradiation.", Popov, et al.  Table 3.2 "Parameters of
         # thermal expansion of stoichiometric MOX fuel and density of UO2 as a function of
         # temperature"
-        cur = self.mat.density3(Tk=700)
+        cur = self.mat.density(Tk=700)
         ref = 1.0832e4 * 0.001  # Convert to grams/cc
         delta = ref * 0.02
         self.assertAlmostEqual(cur, ref, delta=delta)
 
-        cur = self.mat.density3(Tk=2600)
+        cur = self.mat.density(Tk=2600)
         ref = 9.9698e3 * 0.001  # Convert to grams/cc
         delta = ref * 0.02
         self.assertAlmostEqual(cur, ref, delta=delta)
@@ -682,7 +682,7 @@ class ThoriumOxide_TestCase(_Material_Test, unittest.TestCase):
     MAT_CLASS = materials.ThoriumOxide
 
     def test_density(self):
-        cur = self.mat.density3(Tc=25)
+        cur = self.mat.density(Tc=25)
         ref = 10.00
         accuracy = 4
         self.assertAlmostEqual(cur, ref, accuracy)
@@ -723,9 +723,9 @@ class Void_TestCase(_Material_Test, unittest.TestCase):
         cur = self.mat.pseudoDensity()
         self.assertEqual(cur, 0.0)
 
-    def test_density3(self):
+    def test_density(self):
         self.mat.setDefaultMassFracs()
-        cur = self.mat.density3()
+        cur = self.mat.density()
         self.assertEqual(cur, 0.0)
 
     def test_linearExpansion(self):
@@ -740,9 +740,9 @@ class Void_TestCase(_Material_Test, unittest.TestCase):
 class Mixture_TestCase(_Material_Test, unittest.TestCase):
     MAT_CLASS = materials._Mixture
 
-    def test_density3(self):
+    def test_density(self):
         self.assertEqual(self.mat.pseudoDensity(500), 0)
-        self.assertEqual(self.mat.density3(500), 0)
+        self.assertEqual(self.mat.density(500), 0)
 
     def test_setDefaultMassFracs(self):
         self.mat.setDefaultMassFracs()
@@ -1703,7 +1703,7 @@ class ZincOxide_TestCase(_Material_Test, unittest.TestCase):
     def test_density(self):
         cur = 5.61
 
-        ref = self.mat.density3(Tk=10.12)
+        ref = self.mat.density(Tk=10.12)
         self.assertAlmostEqual(cur, ref, 2)
 
     def test_linearExpansionPercent(self):
