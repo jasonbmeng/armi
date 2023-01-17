@@ -28,7 +28,7 @@ class LeadBismuth(material.Fluid):
     r"""Lead bismuth eutectic"""
     name = "Lead Bismuth"
     propertyValidTemperature = {
-        "density": ((400, 1300), "K"),
+        "pseudoDensity": ((400, 1300), "K"),
         "dynamic visc": ((400, 1100), "K"),
         "heat capacity": ((400, 1100), "K"),
         "thermal conductivity": ((400, 1100), "K"),
@@ -40,10 +40,10 @@ class LeadBismuth(material.Fluid):
         self.setMassFrac("PB", 0.445)
         self.setMassFrac("BI209", 0.555)
 
-    def density(self, Tk=None, Tc=None):
+    def pseudoDensity(self, Tk=None, Tc=None):
         r"""density in g/cc from V. sobolev/ J Nucl Mat 362 (2007) 235-247"""
         Tk = getTk(Tc, Tk)
-        self.checkPropertyTempRange("density", Tk)
+        self.checkPropertyTempRange("pseudoDensity", Tk)
 
         return 11.096 - 0.0013236 * Tk  # pre-converted from kg/m^3 to g/cc
 

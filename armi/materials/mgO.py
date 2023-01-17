@@ -23,7 +23,7 @@ class MgO(Material):
     r"""MagnesiumOxide"""
     name = "MgO"
     propertyValidTemperature = {
-        "density": ((273, 1273), "K"),
+        "pseudoDensity": ((273, 1273), "K"),
         "linear expansion percent": ((273.15, 1273.15), "K"),
     }
 

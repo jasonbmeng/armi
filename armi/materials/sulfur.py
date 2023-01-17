@@ -26,7 +26,7 @@ class Sulfur(material.Fluid):
     name = "Sulfur"
 
     propertyValidTemperature = {
-        "density": ((334, 430), "K"),
+        "pseudoDensity": ((334, 430), "K"),
         "volumetric expansion": ((334, 430), "K"),
     }
 
@@ -58,10 +58,10 @@ class Sulfur(material.Fluid):
         self.setMassFrac("S34", 0.0429)
         self.setMassFrac("S36", 0.002)
 
-    def density(self, Tk=None, Tc=None):
+    def pseudoDensity(self, Tk=None, Tc=None):
         r"""P. Espeau, R. Ceolin "density of molten sulfur in the 334-508K range" """
         Tk = getTk(Tc, Tk)
-        self.checkPropertyTempRange("density", Tk)
+        self.checkPropertyTempRange("pseudoDensity", Tk)
 
         return (2.18835 - 0.00098187 * Tk) * (self.fullDensFrac)
 

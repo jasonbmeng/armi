@@ -27,7 +27,7 @@ class Cs(Fluid):
     def setDefaultMassFracs(self):
         self.setMassFrac("CS133", 1.0)
 
-    def density(self, Tk=None, Tc=None):
+    def pseudoDensity(self, Tk=None, Tc=None):
         """
         https://en.wikipedia.org/wiki/Caesium
         """

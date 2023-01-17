@@ -24,7 +24,7 @@ class Lead(material.Fluid):
     r"""Natural lead"""
     name = "Lead"
     propertyValidTemperature = {
-        "density": ((600, 1700), "K"),
+        "pseudoDensity": ((600, 1700), "K"),
         "heat capacity": ((600, 1500), "K"),
         "volumetric expansion": ((600, 1700), "K"),
     }
@@ -42,10 +42,10 @@ class Lead(material.Fluid):
         r"""mass fractions"""
         self.setMassFrac("PB", 1)
 
-    def density(self, Tk=None, Tc=None):
+    def pseudoDensity(self, Tk=None, Tc=None):
         r"""density in g/cc from V. sobolev/ J Nucl Mat 362 (2007) 235-247"""
         Tk = getTk(Tc, Tk)
-        self.checkPropertyTempRange("density", Tk)
+        self.checkPropertyTempRange("pseudoDensity", Tk)
 
         return 11.367 - 0.0011944 * Tk  # pre-converted from kg/m^3 to g/cc
 

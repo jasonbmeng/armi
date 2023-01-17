@@ -312,7 +312,7 @@ class Water(Fluid):
 
         return phi + 1.0 / rho * dp_dT
 
-    def density(self, Tk=None, Tc=None):
+    def pseudoDensity(self, Tk=None, Tc=None):
         raise NotImplementedError(
             "Please use a concrete instance: SaturatedWater or SaturatedSteam."
         )
@@ -332,7 +332,7 @@ class SaturatedWater(Water):
 
     name = "SaturatedWater"
 
-    def density(self, Tk: float = None, Tc: float = None) -> float:
+    def pseudoDensity(self, Tk: float = None, Tc: float = None) -> float:
         """
         returns density in g/cc
 
@@ -391,7 +391,7 @@ class SaturatedSteam(Water):
 
     name = "SaturatedSteam"
 
-    def density(self, Tk: float = None, Tc: float = None) -> float:
+    def pseudoDensity(self, Tk: float = None, Tc: float = None) -> float:
         """
         returns density in g/cc
 

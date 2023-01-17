@@ -26,9 +26,9 @@ class Potassium(material.Fluid):
     """
 
     name = "Potassium"
-    propertyValidTemperature = {"density": ((63.38, 759), "K")}
+    propertyValidTemperature = {"pseudoDensity": ((63.38, 759), "K")}
 
-    def density(self, Tk=None, Tc=None):
+    def pseudoDensity(self, Tk=None, Tc=None):
         r"""
         Calculates the density of molten Potassium in g/cc
         From Foust, O.J. Sodium-NaK Engineering Handbook Vol. 1. New York: Gordon and Breach, 1972.
@@ -36,5 +36,5 @@ class Potassium(material.Fluid):
         """
         Tc = getTc(Tc, Tk)
         Tk = getTk(Tc=Tc)
-        self.checkPropertyTempRange("density", Tk)
+        self.checkPropertyTempRange("pseudoDensity", Tk)
         return 0.8415 - 2.172e-4 * Tc - 2.70e-8 * Tc ** 2 + 4.77e-12 * Tc ** 3

@@ -340,7 +340,7 @@ class Component(composites.Composite, metaclass=ComponentType):
         # note, that this is not the actual material density, but rather 2D expanded
         # `density3` is 3D density
         # call getProperty to cache and improve speed
-        density = self.material.getProperty("density", Tc=self.temperatureInC)
+        density = self.material.getProperty("pseudoDensity", Tc=self.temperatureInC)
 
         self.p.numberDensities = densityTools.getNDensFromMasses(
             density, self.material.massFrac
@@ -1165,7 +1165,7 @@ class Component(composites.Composite, metaclass=ComponentType):
 
         if not density:
             # possible that there are no nuclides in this component yet. In that case, defer to Material.
-            density = self.material.density(Tc=self.temperatureInC)
+            density = self.material.pseudoDensity(Tc=self.temperatureInC)
 
         return density
 

@@ -36,7 +36,7 @@ class Sodium(material.Fluid):
     name = "Sodium"
 
     propertyValidTemperature = {
-        "density": ((97.85, 2230.55), "C"),
+        "pseudoDensity": ((97.85, 2230.55), "C"),
         "enthalpy": ((371.0, 2000.0), "K"),
         "thermal conductivity": ((3715, 1500), "K"),
     }
@@ -46,7 +46,7 @@ class Sodium(material.Fluid):
         self.setMassFrac("NA", 1.0)
         self.refDens = 0.968
 
-    def density(self, Tk=None, Tc=None):
+    def pseudoDensity(self, Tk=None, Tc=None):
         """
         Returns density of Sodium in g/cc.
 
@@ -65,7 +65,7 @@ class Sodium(material.Fluid):
             mass density in g/cc
         """
         Tc = getTc(Tc, Tk)
-        self.checkPropertyTempRange("density", Tc)
+        self.checkPropertyTempRange("pseudoDensity", Tc)
 
         if (Tc is not None) and (Tc <= 97.72):
             runLog.warning(
@@ -89,7 +89,7 @@ class Sodium(material.Fluid):
         """
         Returns the liquid specific volume in m^3/kg of this material given Tk in K or Tc in C.
         """
-        return 1 / (1000.0 * self.density(Tk, Tc))
+        return 1 / (1000.0 * self.pseudoDensity(Tk, Tc))
 
     def enthalpy(self, Tk=None, Tc=None):
         """

@@ -26,7 +26,7 @@ from armi.utils.mathematics import getFloat
 
 class Lithium(material.Fluid):
     name = "Lithium"
-    references = {"density": "Wikipedia"}
+    references = {"pseudoDensity": "Wikipedia"}
     enrichedNuclide = "LI6"
 
     def applyInputParams(self, LI_wt_frac=None, LI6_wt_frac=None, *args, **kwargs):
@@ -52,7 +52,7 @@ class Lithium(material.Fluid):
         if enrich is not None:
             self.adjustMassEnrichment(LI6_wt_frac)
 
-    def density(self, Tk=None, Tc=None):
+    def pseudoDensity(self, Tk=None, Tc=None):
         r"""
         Wikipedia
 

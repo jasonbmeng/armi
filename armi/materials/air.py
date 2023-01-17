@@ -57,13 +57,9 @@ class Air(material.Fluid):
         self.setMassFrac("O", 0.231781)
         self.setMassFrac("AR", 0.012827)
 
-    def density(
-        self,
-        Tk=None,
-        Tc=None,
-    ):
+    def pseudoDensity(self, Tk=None, Tc=None):
         """
-        Returns density of Air in g/cc.
+        Returns 2D density of Air in g/cc.
 
         This is from Table A.4 in
         Fundamentals of Heat and Mass Transfer Incropera, DeWitt
@@ -90,7 +86,7 @@ class Air(material.Fluid):
         """
         Returns the liquid specific volume in m^3/kg of this material given Tk in K or Tc in C.
         """
-        return 1 / (1000.0 * self.density(Tk, Tc))
+        return 1 / (1000.0 * self.pseudoDensity(Tk, Tc))
 
     def thermalConductivity(self, Tk=None, Tc=None):
         """

@@ -49,7 +49,7 @@ class SiC(Material):
     propertyEquation = {
         "heat capacity": "1110 + 0.15*Tc - 425*math.exp(-0.003*Tc)",
         "cumulative linear expansion": "(4.22 + 8.33E-4*Tc-3.51*math.exp(-0.00527*Tc))*1.0E-6",
-        "density": "(rho0*(1 + cA*(Tc - Tc0))**(-3))*1.0E3",
+        "pseudoDensity": "(rho0*(1 + cA*(Tc - Tc0))**(-3))*1.0E3",
         "thermal conductivity": "(52000*math.exp(-1.24E-5*Tc))/(Tc+437)",
     }
 
@@ -57,7 +57,7 @@ class SiC(Material):
         "melting point": "K",
         "heat capacity": "J kg^-1 K^-1",
         "cumulative linear expansion": "K^-1",
-        "density": "kg m^-3",
+        "pseudoDensity": "kg m^-3",
         "thermal conductivity": "W m^-1 K^-1",
     }
 
@@ -65,7 +65,7 @@ class SiC(Material):
 
     propertyValidTemperature = {
         "cumulative linear expansion": ((0, 1500), "C"),
-        "density": ((0, 1500), "C"),
+        "pseudoDensity": ((0, 1500), "C"),
         "heat capacity": ((0, 2000), "C"),
         "thermal conductivity": ((0, 2000), "C"),
     }
@@ -91,9 +91,9 @@ class SiC(Material):
         self.checkPropertyTempRange("cumulative linear expansion", Tc)
         return (4.22 + 8.33e-4 * Tc - 3.51 * math.exp(-0.00527 * Tc)) * 1.0e-6
 
-    def density(self, Tc=None, Tk=None):
+    def pseudoDensity(self, Tc=None, Tk=None):
         Tc = getTc(Tc, Tk)
-        self.checkPropertyTempRange("density", Tc)
+        self.checkPropertyTempRange("pseudoDensity", Tc)
         rho0 = 3.16
         Tc0 = 0.0
         cA = self.cumulativeLinearExpansion(Tc=Tc)

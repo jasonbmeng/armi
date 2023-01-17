@@ -358,7 +358,7 @@ class Material:
     ) -> float:
         """Get the temperature at which the perturbed density occurs."""
         densFunc = (
-            lambda temp: self.density(Tc=temp) - targetDensity
+            lambda temp: self.pseudoDensity(Tc=temp) - targetDensity
         )  # 0 at tempertature of targetDensity
         tAtTargetDensity = float(
             fsolve(densFunc, temperatureGuessInC)
@@ -374,7 +374,7 @@ class Material:
         return 0.0 if self.parent is None else self.parent.gasPorosity
 
     # TODO: JOHN: Second: density -> pseudoDensity
-    def density(self, Tk: float = None, Tc: float = None) -> float:
+    def pseudoDensity(self, Tk: float = None, Tc: float = None) -> float:
         """
         Return density that preserves mass when thermally expanded in 2D.
 
@@ -390,7 +390,7 @@ class Material:
 
         See Also
         --------
-        armi.materials.density3:
+        armi.materials.density:
             component density should be in agreement with this density
         armi.reactor.blueprints._applyBlockDesign:
             2D expansion and axial density reduction occurs here.
@@ -399,7 +399,7 @@ class Material:
         dLL = self.linearExpansionPercent(Tk=Tk)
         if self.refDens is None:
             runLog.warning(
-                "{0} has no reference density".format(self),
+                "{0} has no reference pseudoDensity".format(self),
                 single=True,
                 label="No refD " + self.getName(),
             )
@@ -418,7 +418,7 @@ class Material:
         armi.materials.density:
             Arguments are forwarded to the g/cc version
         """
-        return self.density(Tk, Tc) * 1000.0
+        return self.pseudoDensity(Tk, Tc) * 1000.0
 
     # TODO: JOHN: Fourth: density3 -> density
     def density3(self, Tk: float = None, Tc: float = None) -> float:
@@ -626,7 +626,7 @@ class Material:
         """
         Tc = getTc(Tc, Tk)
 
-        rhoCp = self.density(Tc=Tc) * 1000.0 * self.heatCapacity(Tc=Tc)
+        rhoCp = self.pseudoDensity(Tc=Tc) * 1000.0 * self.heatCapacity(Tc=Tc)
 
         return rhoCp
 
@@ -683,10 +683,10 @@ class Fluid(Material):
         """
         Return the factor required to update thermal expansion going from temperatureInC to temperatureInCNew.
         """
-        rho0 = self.density(Tc=prevTempInC)
+        rho0 = self.pseudoDensity(Tc=prevTempInC)
         if not rho0:
             return 1.0
-        rho1 = self.density(Tc=newTempInC)
+        rho1 = self.pseudoDensity(Tc=newTempInC)
         return rho1 / rho0
 
     def linearExpansion(self, Tk=None, Tc=None):
@@ -698,7 +698,7 @@ class Fluid(Material):
         self, Tc: float, densityFrac: float, quiet: bool = True
     ) -> float:
         """Return a temperature difference for a given density perturbation."""
-        currentDensity = self.density(Tc=Tc)
+        currentDensity = self.pseudoDensity(Tc=Tc)
         perturbedDensity = currentDensity * densityFrac
         tAtPerturbedDensity = self.getTemperatureAtDensity(perturbedDensity, Tc)
         deltaT = tAtPerturbedDensity - Tc
@@ -718,32 +718,14 @@ class Fluid(Material):
 
         Notes
         -----
-        for fluids, there is no such thing as 2 d expansion so density() is already 3D.
+        for fluids, there is no such thing as 2 d expansion so pseudoDensity() is already 3D.
         """
-        return self.density(Tk=Tk, Tc=Tc)
+        return self.pseudoDensity(Tk=Tk, Tc=Tc)
 
 
 class SimpleSolid(Material):
     """
     Base material for a simple material that primarily defines density
-
-    Notes
-    -----
-    This function assumed the density is defined on the _density method and
-    this base class keeps density, density3 and linearExpansion all in sync
-
-    class SimpleMaterial(SimpleSolid):
-
-        def _density(self, Tk=None, Tc=None):
-            "
-            density that preserves mass when thermally expanded in 3D.
-            "
-            ...
-
-    See Also
-    --------
-    armi.materials.density:
-    armi.materials.density3:
     """
 
     refTempK = 300

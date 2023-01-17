@@ -20,16 +20,16 @@ from armi.utils.units import getTk
 
 class Magnesium(material.Fluid):
     name = "Magnesium"
-    propertyValidTemperature = {"density": ((923, 1390), "K")}
+    propertyValidTemperature = {"pseudoDensity": ((923, 1390), "K")}
 
     def setDefaultMassFracs(self):
         self.setMassFrac("MG", 1.0)
 
-    def density(self, Tk=None, Tc=None):
+    def pseudoDensity(self, Tk=None, Tc=None):
         r"""returns mass density of magnesium in g/cc
         The Liquid Temperature Range, Density and Constants of Magnesium. P.J. McGonigal. Temple University 1961.
         """
         Tk = getTk(Tc, Tk)
-        self.checkPropertyTempRange("density", Tk)
+        self.checkPropertyTempRange("pseudoDensity", Tk)
 
         return 1.59 - 0.00026 * (Tk - 924.0)

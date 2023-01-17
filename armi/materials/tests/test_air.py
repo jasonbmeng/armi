@@ -241,7 +241,7 @@ class Test_Air(unittest.TestCase):
         refO = 0.210748
         refAR = 0.004671
 
-        nDens = densityTools.getNDensFromMasses(air.density(Tk=300), air.massFrac)
+        nDens = densityTools.getNDensFromMasses(air.pseudoDensity(Tk=300), air.massFrac)
 
         error = math.fabs(nDens["C"] / sum(nDens.values()) - refC)
         self.assertLess(error, 1e-4)
@@ -256,9 +256,9 @@ class Test_Air(unittest.TestCase):
 
         air = Air()
 
-        air.density(Tk=2399)
+        air.pseudoDensity(Tk=2399)
         try:
-            air.density(Tk=2401)
+            air.pseudoDensity(Tk=2401)
         except AssertionError:
             pass
 
