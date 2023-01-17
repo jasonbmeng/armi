@@ -409,7 +409,7 @@ class Material:
         return self.refDens / f  # g/cm^3
 
     # TODO: JOHN: First: densityKgM3 -> pseudoDensityKgM3
-    def densityKgM3(self, Tk: float = None, Tc: float = None) -> float:
+    def pseudoDensityKgM3(self, Tk: float = None, Tc: float = None) -> float:
         """
         Return density that preserves mass when thermally expanded in 2D in units of kg/m^3
 
