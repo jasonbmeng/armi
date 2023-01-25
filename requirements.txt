@@ -1,5 +1,3 @@
 # see https://github.com/advisories/GHSA-6p56-wp2h-9hxr
 # This is included in requirements.txt because of a security alert numpy released
 numpy == 1.21.0
-
--e .[memprof]
