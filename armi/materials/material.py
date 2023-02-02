@@ -810,7 +810,18 @@ class SimpleSolid(Material):
         The same method as the parent class, but with the ability to apply a
         non-unity theoretical density.
         """
-        return Material.density(self, Tk=Tk, Tc=Tc) * self.getTD()
+        Tk = getTk(Tc, Tk)
+        dLL = self.linearExpansionPercent(Tk=Tk)
+        if self.refDens is None:
+            runLog.warning(
+                "{0} has no reference density".format(self),
+                single=True,
+                label="No refD " + self.getName(),
+            )
+            self.refDens = 0.0
+
+        f = (1.0 + dLL / 100.0) ** 2
+        return (self.refDens / f) * self.getTD()
 
 
 class FuelMaterial(Material):
